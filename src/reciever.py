@@ -14,7 +14,7 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe(TOPIC)
 
 def on_message(client, userdata, msg):
-    print(f"Odebrano wiadomo ^{ ^g z {msg.topic}")
+    print("Odebrano wiadomosc z {msg.topic}")
     try:
         iot_msg = iotProjekt_pb2.IoTMessage()
         iot_msg.ParseFromString(msg.payload)
@@ -32,9 +32,9 @@ def on_message(client, userdata, msg):
 
         if iot_msg.HasField("bme680_data"):
             print("BME680:")
-            print(f"  Temperatura: {iot_msg.bme680_data.temperature:.2f}   C")
-            print(f"  Ci ^{nienie: {iot_msg.bme680_data.pressure:.2f} hPa")
-            print(f"  Wilgotno ^{ ^g: {iot_msg.bme680_data.humidity:.2f} %")
+            print("  Temperatura: {iot_msg.bme680_data.temperature:.2f}   C")
+            print("  Ci ^{nienie: {iot_msg.bme680_data.pressure:.2f} hPa")
+            print("  Wilgotno ^{ ^g: {iot_msg.bme680_data.humidity:.2f} %")
 
             data["sensor"] = "BME680"
             data["temperature"] = iot_msg.bme680_data.temperature
@@ -43,7 +43,7 @@ def on_message(client, userdata, msg):
 
         elif iot_msg.HasField("hcsr04_data"):
             print("HC-SR04:")
-            print(f"  Odleg ^bo ^{ ^g: {iot_msg.hcsr04_data.distance_cm:.2f} cm")
+            print("Odleglosc : {iot_msg.hcsr04_data.distance_cm:.2f} cm")
 
             data["sensor"] = "HC-SR04"
             data["distance_cm"] = iot_msg.hcsr04_data.distance_cm
@@ -67,7 +67,7 @@ def on_message(client, userdata, msg):
         print("Zaktualizowano data.json\n")
 
     except Exception as e:
-        print("B ^b ^ed dekodowania wiadomo ^{ci:", e)
+        print("Blad dekodowania wiadomosci:", e)
 
 client = mqtt.Client()
 client.on_connect = on_connect
